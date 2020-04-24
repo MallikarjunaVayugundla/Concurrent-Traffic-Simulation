@@ -12,17 +12,12 @@ TrafficLightPhase MessageQueue<T>::receive()
     // to wait for and receive new messages and pull them from the queue using move semantics. 
     // The received object should then be returned by the receive function.
     std::unique_lock<std::mutex> ulck(_mtx);
-    //do stuff
-
     //wait
     _cvr.wait(ulck );
-
-
     //return received TrafficLightPhase
     TrafficLightPhase lastPhase=std::move(_queue.back());
     _queue.pop_back(); // need to remove?
     return lastPhase;
-
 }
 
 template <typename T>
@@ -38,7 +33,6 @@ void MessageQueue<T>::send(TrafficLightPhase &&trafficLightPhase)
 
 
 /* Implementation of class "TrafficLight" */
-
 
 TrafficLight::TrafficLight()
 {
